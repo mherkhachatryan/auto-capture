@@ -61,3 +61,6 @@ Use this script to detect your emotion on taken photos. Image path is required.<
 python emotion_detector.py "home/mher/image.png" 
 ```
 This example takes a `image.png` and will print emotion detected on face, containing in the image.
+
+## Code Overview
+*code overview and method explanation are coming later*
