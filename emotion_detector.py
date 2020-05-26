@@ -4,22 +4,27 @@ import cv2
 import face_recognition
 import argparse
 
+# get a pretrained model
 model = load_model("model/model_v6_23.hdf5")
 emotion_dict = {'Angry': 0, 'Sad': 5, 'Neutral': 4, 'Disgust': 1, 'Surprise': 6, 'Fear': 2, 'Happy': 3}
 
 
 def detect_emotion(path):
     """
-    Predict face emotion using pretrained model
+    Predict face emotion using pretrained model.
+    Works on a single face.
 
     :param path: str: Image path
     :return: str:     Emotion on face
     """
+
+    # load and detect a face in a image
     image = face_recognition.load_image_file(path)
     face_locations = face_recognition.face_locations(image)
     top, right, bottom, left = face_locations[0]
     face_image = image[top:bottom, left:right]
 
+    # resize and change a colors for better prediction
     face_image = cv2.resize(face_image, (48, 48))
     face_image = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
     face_image = np.reshape(face_image, [1, face_image.shape[0], face_image.shape[1], 1])
