@@ -112,7 +112,7 @@ def auto_capturing(auto_path, man_path, mar_threshold, ear_threshold, frame_wait
                     frame = video_stream.read()
                     # time.sleep(.05)
                     img_name = f"auto_capture_frame_{TOTAL}.png"
-                    cv2.imwrite(auto_path + img_name, frame)
+                    cv2.imwrite(auto_path + "/" + img_name, frame)
                     print(f"{img_name} written!")
                 COUNTER = 0
 
@@ -137,7 +137,7 @@ def auto_capturing(auto_path, man_path, mar_threshold, ear_threshold, frame_wait
             frame = video_stream.read()
             time.sleep(.004)
             img_name = f"manual_capture_{TOTAL}.png"
-            cv2.imwrite(man_path + img_name, frame)
+            cv2.imwrite(man_path + "/" + img_name, frame)
             print(f"{img_name} written!")
             TOTAL += 1
             continue
@@ -146,7 +146,9 @@ def auto_capturing(auto_path, man_path, mar_threshold, ear_threshold, frame_wait
     video_stream.stop()
 
 
-parser = argparse.ArgumentParser(description="Apps which captures automatic photos when user is smiling")
+parser = argparse.ArgumentParser(description="Script which captures automatic photos when user is smiling.\n \
+                                              Follow the link for more \
+                                             details https://github.com/mherkhachatryan/auto-capture .")
 parser.add_argument("-a", "--auto_path", default='AutoCaps/', help="Directory name where \
                                                         automatically captured photos will be stored", type=str)
 parser.add_argument("-m", "--man_path", default="ManCaps/", help="Directory name where \

@@ -21,18 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="73d94679-9b0c-48ac-9527-d6689e4bc76e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/image.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/face.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sound/camera-shutter-click-01.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sound/camera-shutter-click-01.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/opencv_frame_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/opencv_frame_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/opencv_frame_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/opencv_frame_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/opencv_frame_5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/opencv_frame_6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/capture.py" beforeDir="false" afterPath="$PROJECT_DIR$/capture.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emotion_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/emotion_detection.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
