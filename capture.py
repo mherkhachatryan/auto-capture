@@ -20,10 +20,11 @@ predictor = dlib.shape_predictor(shape_predictor)
 
 def smile(mouth):
     """
-    Compute Mouth Aspect Ration (MAR)
+    Compute Mouth Aspect Ration (MAR), by dividing mean distance of vertical
+    points on mouth over horizontal distance on rightmost and leftmost points
 
     :param mouth: (in, int) : (x, y) coordinates of the facial landmark for a mouth
-    :return: float: MAR
+    :return: float:           MAR
     """
     A = dist.euclidean(mouth[3], mouth[9])
     B = dist.euclidean(mouth[2], mouth[10])
@@ -40,7 +41,7 @@ def blink(eye):
     on upper and lower parts of eye on euclidean distance of rightmost and leftmost points of the eye
 
     :param eye: (in, int) : (x, y) coordinates of the facial landmark for a given eye
-    :return: float:  EAR
+    :return: float:         EAR
     """
 
     # vertical landmarks of the eye
@@ -57,6 +58,24 @@ def blink(eye):
 
 
 def auto_capturing(auto_path, man_path, mar_threshold, ear_threshold, frame_waiter, verbose):
+    """
+    Creates a cv2 window which opens a web camera and depending on conditions (eyes are open and smile)
+    take a snapshot, also available manual shots.
+
+    :param auto_path: str :                 Directory name where automatically captured photos will be stored
+    :param man_path: str :                  Directory name where manual captured photos will be stored
+    :param mar_threshold:  (float, flaot) : Mouth Aspect Ratio threshold, (min, max):
+                                            to control smiling threshold, default numbers are computed
+                                            from trial and error, and may differ on
+                                            different mouth shapes. min controls smiling
+                                            without teeth, max controls smiling with teeth
+    :param ear_threshold: float :           Eye Aspect Ratio threshold, if EAR is great or
+                                            great or equal this number, it means eyes are open,
+                                            and ready to a shot
+    :param frame_waiter: float :            Number of frames that camera should wait before taking a snapshot
+    :param verbose: bool:                   Show contours around facial features and MAR and EAR values
+    :return:                                None
+    """
     COUNTER = 0  # frame counter
     TOTAL = 0  # picture counter to update filename after each shot
     video_stream = VideoStream(src=0).start()
@@ -128,9 +147,9 @@ def auto_capturing(auto_path, man_path, mar_threshold, ear_threshold, frame_wait
 
 
 parser = argparse.ArgumentParser(description="Apps which captures automatic photos when user is smiling")
-parser.add_argument("--auto_path", default='AutoCaps/', help="Directory name where \
+parser.add_argument("-a", "--auto_path", default='AutoCaps/', help="Directory name where \
                                                         automatically captured photos will be stored", type=str)
-parser.add_argument("--man_path", default="ManCaps/", help="Directory name where \
+parser.add_argument("-m", "--man_path", default="ManCaps/", help="Directory name where \
                                                            manual captured photos will be stored", type=str)
 parser.add_argument("--eye", default=0.21, help="Eye Aspect Ratio threshold, if EAR is great or  \
                                                 great or equal this number, it means eyes are open, \
@@ -140,10 +159,10 @@ parser.add_argument("--mouth", help="Mouth Aspect Ratio threshold, (min, max):  
                                    from trial and error, and may differ on \
                                    different mouth shapes. min controls smiling \
                                    without teeth, max controls smiling with teeth", default=(0.3, 0.35), type=tuple)
-parser.add_argument("--frame_waiter", help="How many frames should camera wait \
+parser.add_argument("--frame_waiter", help="Number of frames that camera should wait \
                                             before taking a snapshot", default=5, type=int)
-parser.add_argument("-v", "--verbose",help = "Show contours around facial features \
-                                             and MAR and EAR values",  default=False, action="store_true")
+parser.add_argument("-v", "--verbose", help="Show contours around facial features \
+                                             and MAR and EAR values", default=False, action="store_true")
 args = parser.parse_args()
 
 auto_capturing(auto_path=args.auto_path, man_path=args.man_path, mar_threshold=args.mouth, ear_threshold=args.eye,
