@@ -37,7 +37,17 @@ To take automated or manual shots run `capture.py` in your local device. <br>
 Just smile scrip will do the rest.<br>
 Auto Captured photos are stored in `AutoCaps` folder. <br>
 You can also take manual shots by either hitting `enter` or `space` buttons. Manual shots are stored in `ManCaps` folder.<br>
+Available options to change photo location, show contour on facial landmarks, or change default value of 
+EAR and MAR threshold. Just refer to scrip help by <br>
+```python capture.py --help``` <br>
 For quitting the program enter either `q` or `esc`.
 
+###### Example 
+```buildoutcfg
+python capture.py -a '/home/mher/Downloads' -v True
+```
+This example will show contour around eyes and mouth, and will save automated taken picture in `/home/mher/Downloads`
 #### Emotion Detection
+Use this script to detect your emotion on taken photos. 
+
 
