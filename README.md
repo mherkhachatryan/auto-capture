@@ -15,7 +15,7 @@ Several 3th party packages are used to create this app. First you need to downlo
     ``` 
 
 *   Clone this repo to your working directory.
-    ```buildoutcfg
+    ```
     git clone https://github.com/mherkhachatryan/auto-capture.git
     ```
 *   (optional) Create and activate a virtual environment either with `pip` or `conda`.
@@ -50,14 +50,14 @@ python capture.py --help
 For quitting the program enter either `q` or `esc`.
 
 ###### Example 
-```buildoutcfg
+```
 python capture.py -a '/home/mher/Downloads' -v True
 ```
 This example will show contour around eyes and mouth, and will save automated taken picture in `/home/mher/Downloads`
 #### Emotion Detection
 Use this script to detect your emotion on taken photos. Image path is required.<br>
 ###### Example 
-```buildoutcfg
+```
 python emotion_detector.py "home/mher/image.png" 
 ```
 This example takes a `image.png` and will print emotion detected on face, containing in the image.
