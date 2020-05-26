@@ -48,6 +48,9 @@ python capture.py -a '/home/mher/Downloads' -v True
 ```
 This example will show contour around eyes and mouth, and will save automated taken picture in `/home/mher/Downloads`
 #### Emotion Detection
-Use this script to detect your emotion on taken photos. 
-
+Use this script to detect your emotion on taken photos. Image path is required.<br>
+###### Example 
+```buildoutcfg
+python emotion_detector.py "home/mher/image.png"
+```
 
