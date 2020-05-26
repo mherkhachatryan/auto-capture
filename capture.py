@@ -78,81 +78,85 @@ def auto_capturing(auto_path, man_path, mar_threshold, ear_threshold, frame_wait
     """
     COUNTER = 0  # frame counter
     TOTAL = 0  # picture counter to update filename after each shot
-    video_stream = VideoStream(src=0).start()
-    time.sleep(1.0)
-    cv2.namedWindow("auto-capture")
+    try:
+        video_stream = VideoStream(src=0).start()
+        time.sleep(1.0)
+        cv2.namedWindow("auto-capture")
 
-    while True:
-        frame = video_stream.read()
-        frame = imutils.resize(frame, width=840)
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        rects = detector(gray, 0)
-
-        for rect in rects:
-            shape = predictor(gray, rect)
-            shape = face_utils.shape_to_np(shape)
-            # get mouth
-            mouth = shape[mouth_start:mouth_end]
-            MAR = smile(mouth)
-
-            # get eyes
-            left_eye = shape[left_eye_start:left_eye_end]
-            right_eye = shape[right_eye_start:right_eye_end]
-            left_EAR = blink(left_eye)
-            right_EAR = blink(right_eye)
-            EAR = (left_EAR + right_EAR) / 2
-
-            # check if eyes are opened and month is smiling
-            if (MAR <= mar_threshold[0] or MAR > mar_threshold[1]) and (EAR >= ear_threshold):
-                COUNTER += 1
-            else:
-                # wait several frames
-                # this is done to detect if user smiles in a few milliseconds or it was just momentary
-                if COUNTER >= frame_waiter:
-                    TOTAL += 1
-                    frame = video_stream.read()  # load the frame where user is ready (smiling)
-                    # time.sleep(.05)
-                    img_name = f"auto_capture_frame_{TOTAL}.png"
-                    cv2.imwrite(auto_path + "/" + img_name, frame)
-                    print(f"{img_name} written!")  # console output
-                COUNTER = 0
-
-            if verbose:
-                # connect facial landmark points to make a contour around a landmark
-                mouth_hull = cv2.convexHull(mouth)
-                left_eye_hull = cv2.convexHull(left_eye)
-                right_eye_hull = cv2.convexHull(right_eye)
-
-                cv2.drawContours(frame, [mouth_hull], -1, (0, 255, 0), 1)
-                cv2.drawContours(frame, [left_eye_hull], -1, (214, 16, 232), 1)
-                cv2.drawContours(frame, [right_eye_hull], -1, (214, 16, 232), 1)
-
-                cv2.putText(frame, f"MAR: {MAR:.4f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                cv2.putText(frame, f"LEFT EAR: {left_EAR:.2f}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (214, 16, 232),
-                            2)
-                cv2.putText(frame, f"RIGHT EAR: {right_EAR:.2f}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                            (214, 16, 232), 2)
-
-        cv2.imshow("Frame", frame)
-
-        key_pressed = cv2.waitKey(1) & 0xFF
-
-        if key_pressed == ord('q') or key_pressed == 27:
-            break
-        elif key_pressed == 13 or key_pressed == 32:
-            """
-            When esc or q pressed take a manual shot, and continue the loop
-            """
+        while True:
             frame = video_stream.read()
-            time.sleep(.004)
-            img_name = f"manual_capture_{TOTAL}.png"
-            cv2.imwrite(man_path + "/" + img_name, frame)
-            print(f"{img_name} written!")
-            TOTAL += 1
-            continue
+            frame = imutils.resize(frame, width=840)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            rects = detector(gray, 0)
 
-    cv2.destroyAllWindows()
-    video_stream.stop()
+            for rect in rects:
+                shape = predictor(gray, rect)
+                shape = face_utils.shape_to_np(shape)
+                # get mouth
+                mouth = shape[mouth_start:mouth_end]
+                MAR = smile(mouth)
+
+                # get eyes
+                left_eye = shape[left_eye_start:left_eye_end]
+                right_eye = shape[right_eye_start:right_eye_end]
+                left_EAR = blink(left_eye)
+                right_EAR = blink(right_eye)
+                EAR = (left_EAR + right_EAR) / 2
+
+                # check if eyes are opened and month is smiling
+                if (MAR <= mar_threshold[0] or MAR > mar_threshold[1]) and (EAR >= ear_threshold):
+                    COUNTER += 1
+                else:
+                    # wait several frames
+                    # this is done to detect if user smiles in a few milliseconds or it was just momentary
+                    if COUNTER >= frame_waiter:
+                        TOTAL += 1
+                        frame = video_stream.read()  # load the frame where user is ready (smiling)
+                        # time.sleep(.05)
+                        img_name = f"auto_capture_frame_{TOTAL}.png"
+                        cv2.imwrite(auto_path + "/" + img_name, frame)
+                        print(f"{img_name} written!")  # console output
+                    COUNTER = 0
+
+                if verbose:
+                    # connect facial landmark points to make a contour around a landmark
+                    mouth_hull = cv2.convexHull(mouth)
+                    left_eye_hull = cv2.convexHull(left_eye)
+                    right_eye_hull = cv2.convexHull(right_eye)
+
+                    cv2.drawContours(frame, [mouth_hull], -1, (0, 255, 0), 1)
+                    cv2.drawContours(frame, [left_eye_hull], -1, (214, 16, 232), 1)
+                    cv2.drawContours(frame, [right_eye_hull], -1, (214, 16, 232), 1)
+
+                    cv2.putText(frame, f"MAR: {MAR:.4f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                    cv2.putText(frame, f"LEFT EAR: {left_EAR:.2f}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                                (214, 16, 232),
+                                2)
+                    cv2.putText(frame, f"RIGHT EAR: {right_EAR:.2f}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                                (214, 16, 232), 2)
+
+            cv2.imshow("Frame", frame)
+
+            key_pressed = cv2.waitKey(1) & 0xFF
+
+            if key_pressed == ord('q') or key_pressed == 27:
+                break
+            elif key_pressed == 13 or key_pressed == 32:
+                """
+                When esc or q pressed take a manual shot, and continue the loop
+                """
+                frame = video_stream.read()
+                time.sleep(.004)
+                img_name = f"manual_capture_{TOTAL}.png"
+                cv2.imwrite(man_path + "/" + img_name, frame)
+                print(f"{img_name} written!")
+                TOTAL += 1
+                continue
+
+        cv2.destroyAllWindows()
+        video_stream.stop()
+    except:
+        print("Make sure you have a Web Cam and it's connected to device")
 
 
 parser = argparse.ArgumentParser(description="Script which captures automatic photos when user is smiling.\n \
