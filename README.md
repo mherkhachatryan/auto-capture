@@ -1,22 +1,43 @@
 # auto-capture
 Auto capture app which opens web camera and takes a snapshot when user is ready: smiles and his/hers eyes are open.
 
-#### 3th party apps
 
-First detecting face from image, using `face_detection` library. 
-for itt istallation we need dlib v19.9. For dlib you need to [install](https://cgold.readthedocs.io/en/latest/first-step/installation.html) CMake.
+## Installation
+
+There are several 3th party packages are used to create this app. First you need to download `dlib` library manually ([source](https://gist.github.com/ageitgey/629d75c1baac34dfa5ca2a1928a7aeaf)). <br> Follow the instructors here.<br>
+*  [Install](https://cgold.readthedocs.io/en/latest/first-step/installation.html) CMake.
+    * **Tip**: If you are using Ubuntu, you can download CMake from Ubuntu Software.
+*   Clone `dlib` to your local machine.   
+    ```
+    git clone https://github.com/davisking/dlib.git
+    cd dlib
+    python setup.py install
+    ``` 
+
+*   Clone this repo to your working directory.
+*   (optional) Create and activate a virtual environment either with `pip` or conda.
+*   Install necessary packages <br>
+    If you are using pip.
+    * `pip install -r requirements.txt`
+    
+    If you are using conda.
+    * 
+    ```
+     conda create -y --name auto-capture python==3.7
+     conda install --force-reinstall -y -q --name auto-capture -c conda-forge --file requirements.txt
+     conda activate auto-capture
+    ```
 
 
-Steps to install  `dlib`([source](https://gist.github.com/ageitgey/629d75c1baac34dfa5ca2a1928a7aeaf) )<br> 
-`git clone https://github.com/davisking/dlib.git` <br>
-```
-cd dlib
-python setup.py install
-``` 
-Then install `face_recognition` package for more details refer [here](https://github.com/ageitgey/face_recognition). <br>
-```
-pip install face_recognition
-```
 
-https://askubuntu.com/questions/80448/what-would-cause-the-gi-module-to-be-missing-from-python
-to install gi for playing sound 
+## Usage
+#### WebCam Capturing
+To take automated or manual shots run `capture.py` in your local device. <br>
+`python capture.py`<br>
+Just smile scrip will do the rest.<br>
+Auto Captured photos are stored in `AutoCaps` folder. <br>
+You can also take manual shots by either hitting `enter` or `space` buttons. Manual shots are stored in `ManCaps` folder.<br>
+For quitting the program enter either `q` or `esc`.
+
+#### Emotion Detection
+
