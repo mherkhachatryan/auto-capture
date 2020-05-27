@@ -19,6 +19,7 @@ Several 3th party packages are used to create this app. First you need to downlo
     git clone https://github.com/mherkhachatryan/auto-capture.git
     cd auto-capture/
     ```
+*   Make sure you are using `python 3.7`
 *   (optional) Create and activate a virtual environment either with `pip` or `conda`.
 *   Install necessary packages. <br>
     If you are using pip.
