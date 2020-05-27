@@ -29,7 +29,7 @@ Several 3th party packages are used to create this app. First you need to downlo
     * 
     ```
      conda create -y --name auto-capture python==3.7
-     conda install --force-reinstall -y -q --name auto-capture -c conda-forge --file requirements.txt
+     pip install -r requirements.txt
      conda activate auto-capture
     ```
 
